@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('readinglist_tag', function (Blueprint $table) {
+        Schema::create('book_reading_list', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-	    $table->foreignId('readinglist_id')->constrained();
-	    $table->foreignId('tag_id')->constrained();
+            $table->foreignId('reading_list_id')->constrained();
+	    $table->foreignId('book_id')->constrained();
         });
     }
 
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('readinglist_tag');
+        Schema::dropIfExists('book_reading_list');
     }
 };

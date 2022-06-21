@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('readinglists', function (Blueprint $table) {
+        Schema::create('reading_list_tag', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-	    $table->string('name', 100)->unique;
-	    $table->string('description', 2000);
+	    $table->foreignId('reading_list_id')->constrained();
+	    $table->foreignId('tag_id')->constrained();
         });
     }
 
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('readinglists');
+        Schema::dropIfExists('reading_list_tag');
     }
 };
