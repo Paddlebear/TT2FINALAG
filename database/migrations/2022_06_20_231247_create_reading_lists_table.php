@@ -18,6 +18,8 @@ return new class extends Migration
             $table->timestamps();
 	    $table->string('name', 100)->unique;
 	    $table->string('description', 2000);
+            $table->foreignId('user_id')->constrained();
+            $table->boolean('visible');
         });
     }
 

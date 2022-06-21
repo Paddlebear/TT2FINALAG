@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Book;
 use App\Models\Tag;
 use App\Models\ReadingList;
+use App\Models\User;
 
 class DatabaseSeeder extends Seeder
 {
@@ -25,6 +26,11 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        $user = User::create([
+            'name' => 'testuser',
+            'email' => 'test@example.com',
+            'password' => bcrypt('secret')
+        ]);
         $book = Book::create([
             'booktitle' => 'testbook1',
             'author' => 'author1',
@@ -53,8 +59,10 @@ class DatabaseSeeder extends Seeder
             'tagname' => 'tag3'
         ]);
         $readinglist = ReadingList::create([
-           'name' => 'testlist1',
-           'description' => 'this is me just testing whether the lists even work...'
+            'name' => 'testlist1',
+            'description' => 'this is me just testing whether the lists even work...',
+            'user_id' => 1,
+            'visible' => 1
         ]);
         DB::table('book_reading_list')->insert(['reading_list_id' => 1, 'book_id' => 1]);
         DB::table('book_reading_list')->insert(['reading_list_id' => 1, 'book_id' => 2]);
