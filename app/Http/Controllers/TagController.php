@@ -1,10 +1,10 @@
-<?php
-
+<?php 
+ /*this one mainly exists for testing purposes.*/
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class LoginController extends Controller
+class TagController extends Controller
 {
     /**
      * Display a listing of the resource.
