@@ -14,7 +14,8 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = Book::all();
+        $books = DB::table('books')->join('genres', 'books.genre_id', '=', 'genres.id')->
+                select('books.id','books.booktitle', 'books.author', 'books.publicationyear', 'genres.genrename')->get();
         return view('all_books', compact('books'));
     }
 
@@ -25,7 +26,7 @@ class BookController extends Controller
      */
     public function create()
     {
-        //
+        return view('add_book');
     }
 
     /**
@@ -36,7 +37,18 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = array(
+            'bookname' => 'required|min:2|max:200',
+            'author' => 'required|min:2|max:200',
+            'publicationyear' => 'required|integer|min:0|max:2025'
+        );
+        $this->validate($request, $rules);
+        $book = new Book();
+        $book->book_name = $request->book_name;
+        $book->book_authors = $request->book_authors;
+        $book->year_published = $request->year_published;
+        $book->save();
+        return redirect('/'); //change the redirect later
     }
 
     /**
@@ -45,9 +57,10 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id) ///only available for admins
     {
-        //
+        $book = Books::findOrFail($id);
+        return view('book_update', compact('book'));
     }
 
     /**
@@ -68,9 +81,19 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id) ///only available for admins
     {
-        //
+        $rules = array(
+            'bookname' => 'required|min:2|max:200',
+            'author' => 'required|min:2|max:200',
+            'publicationyear' => 'required|integer|min:0|max:2025'
+        );
+        $book = Book::find($request->id);
+        $book->book_name = $request->book_name;
+        $book->book_authors = $request->book_authors;
+        $book->year_published = $request->year_published;
+        $book->save();
+        return redirect('/'); //change the redirect later
     }
 
     /**
@@ -79,8 +102,8 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id) ///only available for admins
     {
-        //
+        Book::findOrFail($id)->delete();
     }
 }

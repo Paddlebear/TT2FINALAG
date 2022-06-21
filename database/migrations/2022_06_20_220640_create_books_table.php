@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('books', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-	    $table->string('booktitle', 100);
+	    $table->string('booktitle', 200);
 	    $table->string('author', 200);
 	    $table->smallInteger('publicationyear');
 	    $table->foreignId('genre_id')->constrained();
