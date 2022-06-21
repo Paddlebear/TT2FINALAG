@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Book;
 use App\Models\Tag;
 use App\Models\ReadingList;
+use Illuminate\Support\Facades\DB;
 
 class TestController extends Controller
 {
@@ -16,7 +17,9 @@ class TestController extends Controller
      */
     public function index()
     {
-        $books = Book::all();
+        //$books = Book::all();
+        $books = DB::table('books')->join('genres', 'books.genre_id', '=', 'genres.id')->
+                select('books.id','books.booktitle', 'books.author', 'books.publicationyear', 'genres.genrename')->get();
         $tags = Tag::all();
         $lists = ReadingList::all();
         return view('test', ['books' => $books, 'tags' => $tags]);

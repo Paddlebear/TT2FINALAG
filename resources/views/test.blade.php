@@ -22,7 +22,7 @@
                 <td> {{ $book->booktitle }} </td>
                 <td> {{ $book->author }} </td>
                 <td> {{ $book->publicationyear }} </td>
-                <td> {{ $book->genre }} </td>
+                <td> {{ $book->genrename }} </td>
                 @endforeach
         </table>
         @endif

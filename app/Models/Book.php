@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\ReadingList;
 use App\Models\Tag;
+use App\Models\Genre;
 
 class Book extends Model
 {
@@ -18,5 +19,9 @@ class Book extends Model
     public function tags()
     {
         return $this->belongsToMany(Tag::class);
+    }
+    public function genres()
+    {
+        return $this->hasMany(Genre::class);
     }
 }

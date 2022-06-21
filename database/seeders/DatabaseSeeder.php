@@ -31,23 +31,26 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
             'password' => bcrypt('secret')
         ]);
+        DB::table('genres')->insert(['genrename' => 'yes']);
+        DB::table('genres')->insert(['genrename' => 'smth']);
+        DB::table('genres')->insert(['genrename' => 'paper']);
         $book = Book::create([
             'booktitle' => 'testbook1',
             'author' => 'author1',
             'publicationyear' => 1999,
-            'genre' => 'yes'
+            'genre_id' => 1
             ]);
         $book = Book::create([
             'booktitle' => 'testbook2',
             'author' => 'author1',
             'publicationyear' => 2015,
-            'genre' => 'smth'
+            'genre_id' => 2
             ]);
         $book = Book::create([
             'booktitle' => 'testbook3',
             'author' => 'author2',
             'publicationyear' => 2001,
-            'genre' => 'paper'
+            'genre_id' => 3
             ]);
         $tag = Tag::create([
             'tagname' => 'tag1'
