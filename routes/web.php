@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BookController;
+use App\Http\Controllers\TestController;
 
 
 /*
@@ -19,4 +19,4 @@ use App\Http\Controllers\BookController;
 //    return view('welcome');
 //});
 Route::redirect('/', 'test');
-Route::resource('test', BookController::class); 
+Route::resource('test', TestController::class); 

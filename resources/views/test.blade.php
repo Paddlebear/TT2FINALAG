@@ -26,6 +26,21 @@
                 @endforeach
         </table>
         @endif
+        @if (count($tags) == 0)
+        <p color='red'> There are no records in the database!</p>
+        @else
+        <table style="border: 1px solid black">
+            <tr>
+                <td> ID </td>
+                <td> Tag Name </td>
+            </tr>
+            @foreach ($tags as $tag)
+            <tr>
+                <td> {{ $tag->id }} </td>
+                <td> {{ $tag->tagname }} </td>
+                @endforeach
+        </table>
+        @endif
 <!--        <p> <input type="button" value="New Country"> </p>
         <script>
             function showCities(countryID) {

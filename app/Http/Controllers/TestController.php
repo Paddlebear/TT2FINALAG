@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Book;
+use App\Models\Tag;
+use App\Models\ReadingList;
 
-class BookController extends Controller
+class TestController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +16,10 @@ class BookController extends Controller
      */
     public function index()
     {
-        //$books = Book::all();
-        //return view('test', compact('books'));
+        $books = Book::all();
+        $tags = Tag::all();
+        $lists = ReadingList::all();
+        return view('test', ['books' => $books, 'tags' => $tags]);
     }
 
     /**
