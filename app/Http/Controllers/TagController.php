@@ -1,5 +1,5 @@
 <?php 
- /*this one mainly exists for testing purposes.*/
+ /*this one mainly exists for testing purposes. this code should be put in the admin controller, honestly.*/
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;

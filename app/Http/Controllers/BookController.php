@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 use App\Models\Book;
@@ -40,13 +41,15 @@ class BookController extends Controller
         $rules = array(
             'bookname' => 'required|min:2|max:200',
             'author' => 'required|min:2|max:200',
-            'publicationyear' => 'required|integer|min:0|max:2025'
+            'publicationyear' => 'required|integer|min:0|max:2025',
+            'genre_id' => 'required|exists:genres,id'
         );
         $this->validate($request, $rules);
         $book = new Book();
-        $book->book_name = $request->book_name;
-        $book->book_authors = $request->book_authors;
-        $book->year_published = $request->year_published;
+        $book->bookname = $request->bookname;
+        $book->author = $request->author;
+        $book->publicationyear = $request->publicationyear;
+        $book->genre_id = $request->genre_id;
         $book->save();
         return redirect('/'); //change the redirect later
     }
@@ -59,8 +62,8 @@ class BookController extends Controller
      */
     public function show($id) ///only available for admins
     {
-        $book = Books::findOrFail($id);
-        return view('book_update', compact('book'));
+        $book = Book::findOrFail($id);
+        return view('edit_book', compact('book'));
     }
 
     /**
@@ -86,12 +89,15 @@ class BookController extends Controller
         $rules = array(
             'bookname' => 'required|min:2|max:200',
             'author' => 'required|min:2|max:200',
-            'publicationyear' => 'required|integer|min:0|max:2025'
+            'publicationyear' => 'required|integer|min:0|max:2025',
+            'genre_id' => 'required|exists:genres,id'
         );
+        $this->validate($request, $rules);
         $book = Book::find($request->id);
-        $book->book_name = $request->book_name;
-        $book->book_authors = $request->book_authors;
-        $book->year_published = $request->year_published;
+        $book->bookname = $request->bookname;
+        $book->author = $request->author;
+        $book->publicationyear = $request->publicationyear;
+        $book->genre_id = $request->genre_id;
         $book->save();
         return redirect('/'); //change the redirect later
     }

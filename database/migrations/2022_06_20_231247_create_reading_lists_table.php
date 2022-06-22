@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
 	    $table->string('name', 100)->unique;
-	    $table->string('description', 2000);
+	    $table->string('description', 2000)->nullable();
             $table->foreignId('user_id')->constrained();
             $table->boolean('visible');
         });
