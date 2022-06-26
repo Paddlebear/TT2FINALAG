@@ -20,7 +20,16 @@ class ReadingListController extends Controller
         //$lists = ReadingList::all();
         return view('all_reading_lists', compact('lists'));
     }
-
+    public function showlist($listname)
+    {
+        $list = DB::table('reading_lists')->join('users', 'reading_lists.user_id', '=', 'users.id')->select('reading_lists.*', 'users.name')->where('listname', '=', $listname)->get();//->value('id');
+        $id = $list[0]->id;
+        $books = DB::table('book_reading_list')->join('books', 'book_reading_list.book_id', '=', 'books.id')->join('genres', 'books.genre_id', '=', 'genres.id')->
+                select('books.booktitle', 'books.author', 'books.publicationyear', 'genres.genrename')->where('reading_list_id', '=', $id)->get();
+        $tags = DB::table('reading_list_tag')->join('tags', 'reading_list_tag.tag_id', '=', 'tags.id')->select('tags.tagname')->where('reading_list_id', '=', $id)->get();
+        return view('reading_list', ['books' => $books, 'tags' => $tags, 'list' => $list]);
+        //return view('reading_list', compact('list'), compact('books'));
+    }
     /**
      * Show the form for creating a new resource.
      *

@@ -28,6 +28,8 @@ Route::get('books', [BookController::class, 'index']);
 Route::get('add_book', [BookController::class, 'create']);
 Route::get('add_reading_list', [ReadingListController::class, 'create']);
 Route::get('delete_reading_list/{id}', [ReadingListController::class, 'showdelete']);
+Route::get('reading_lists/{listname}', [ReadingListController::class, 'showlist']);
+Route::post('book/update', [BookController::class, 'update']);
 //Auth::routes();
 //
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -20,12 +20,18 @@
                 <td> {{ $user->id }} </td>
                 <td> {{ $user->name }} </td>
                 <td> {{ $user->email }} </td>
-<!--                <td>
+                <td>
                     <form method="POST"
 
-                          action='{{action([App\Http\Controllers\AdminController::class, 'block'],$user -> id) }}'>
+                          action='{{action([App\Http\Controllers\AdminController::class, 'blockUser'],$user -> id) }}'>
                         @csrf @method('DELETE')
-                        <input type="submit" value="delete"></form> </td>-->
+                        <input type="submit" value="Block user"></form> </td>
+                <td>
+                    <form method="POST"
+
+                          action='{{action([App\Http\Controllers\AdminController::class, 'deleteUser'],$user -> id) }}'>
+                        @csrf @method('DELETE')
+                        <input type="submit" value="Delete user"></form> </td>
                 @endforeach
         </table>
         @endif

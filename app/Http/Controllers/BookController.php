@@ -116,5 +116,6 @@ class BookController extends Controller
     {
         DB::table('book_tag')->where('book_id', '=', $id)->delete();
         Book::findOrFail($id)->delete();
+        return redirect('/'); //this def needs to be changed
     }
 }

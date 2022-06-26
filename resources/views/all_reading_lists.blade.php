@@ -20,6 +20,7 @@
                 <td> {{ $list->listname }} </td>
                 <td> {{ $list->name }} </td>
                 <td> {{ $list->description }} </td>
+                <td><input type="button" value="See list contents" onclick="seeList('{{$list->listname}}')"></td>
                 <td><input type="button" value="Delete list" onclick="deleteList({{ $list->id }})"></td>
                 @endforeach
         </table>
@@ -36,6 +37,13 @@
             }
             function deleteList(listID) {
                 window.location.href = "/delete_reading_list/"+listID;
+            }
+            function seeBooks() {
+                window.location.href = "/books";
+            }
+            function seeList(listname) {
+                //var name = str_replace(' ', '_', $listname);
+                window.location.href = "/reading_lists/" + listname; 
             }
 //            function filterBooks() {
 //                window.location.href = "filter";
