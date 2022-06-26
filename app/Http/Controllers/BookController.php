@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 use App\Models\Book;
+use App\Models\Genre;
 
 class BookController extends Controller
 {
@@ -16,7 +17,7 @@ class BookController extends Controller
     public function index()
     {
         $books = DB::table('books')->join('genres', 'books.genre_id', '=', 'genres.id')->
-                select('books.id','books.booktitle', 'books.author', 'books.publicationyear', 'genres.genrename')->get();
+                select('books.booktitle', 'books.author', 'books.publicationyear', 'genres.genrename')->orderBy('books.id')->get();
         return view('all_books', compact('books'));
     }
 
@@ -27,7 +28,11 @@ class BookController extends Controller
      */
     public function create()
     {
-        return view('add_book');
+        $genres = Genre::all()->map(function ($genre) {
+            $genre->value = $genre->id;
+            return $genre;
+	   });
+        return view('add_book', compact('genres'));
     }
 
     /**
@@ -39,14 +44,14 @@ class BookController extends Controller
     public function store(Request $request)
     {
         $rules = array(
-            'bookname' => 'required|min:2|max:200',
+            'booktitle' => 'required|min:2|max:200',
             'author' => 'required|min:2|max:200',
             'publicationyear' => 'required|integer|min:0|max:2025',
             'genre_id' => 'required|exists:genres,id'
         );
         $this->validate($request, $rules);
         $book = new Book();
-        $book->bookname = $request->bookname;
+        $book->booktitle = $request->booktitle;
         $book->author = $request->author;
         $book->publicationyear = $request->publicationyear;
         $book->genre_id = $request->genre_id;
@@ -76,7 +81,6 @@ class BookController extends Controller
     {
         //
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -87,14 +91,14 @@ class BookController extends Controller
     public function update(Request $request, $id) ///only available for admins
     {
         $rules = array(
-            'bookname' => 'required|min:2|max:200',
+            'booktitle' => 'required|min:2|max:200',
             'author' => 'required|min:2|max:200',
             'publicationyear' => 'required|integer|min:0|max:2025',
             'genre_id' => 'required|exists:genres,id'
         );
         $this->validate($request, $rules);
         $book = Book::find($request->id);
-        $book->bookname = $request->bookname;
+        $book->booktitle = $request->booktitle;
         $book->author = $request->author;
         $book->publicationyear = $request->publicationyear;
         $book->genre_id = $request->genre_id;
@@ -110,6 +114,7 @@ class BookController extends Controller
      */
     public function destroy($id) ///only available for admins
     {
+        DB::table('book_tag')->where('book_id', '=', $id)->delete();
         Book::findOrFail($id)->delete();
     }
 }

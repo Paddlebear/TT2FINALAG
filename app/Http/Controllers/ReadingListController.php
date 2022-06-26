@@ -15,7 +15,9 @@ class ReadingListController extends Controller
      */
     public function index()
     {
-        $lists = DB::table('reading_lists')->select('reading_lists.name', 'reading_lists.owner', 'reading_lists.description')->where('reading_lists.visible', '=', 1);
+        $lists = DB::table('reading_lists')->join('users', 'reading_lists.user_id', '=', 'users.id')
+                ->select('reading_lists.id','reading_lists.listname', 'users.name', 'reading_lists.description')->where('reading_lists.visible', '=', 1)->get();
+        //$lists = ReadingList::all();
         return view('all_reading_lists', compact('lists'));
     }
 
@@ -38,15 +40,16 @@ class ReadingListController extends Controller
     public function store(Request $request)
     {
         $rules = array(
-            'name' => 'required|min:2|max:200',
+            'listname' => 'required|min:2|max:200',
             'description' => 'min:0|max:2000',
             'user_id' => 'required|exists:users,id'
         );
         $this->validate($request, $rules);
         $list = new ReadingList();
-        $list->name = $request->name;
+        $list->listname = $request->listname;
         $list->description = $request->description; //possibly wrong
         $list->user_id = $request->user_id;
+        $list->visible = $request->visible;
         $list->save();
         return redirect('/'); //change the redirect later
     }
@@ -84,15 +87,16 @@ class ReadingListController extends Controller
     public function update(Request $request, $id)
     {
         $rules = array(
-            'name' => 'required|min:2|max:200',
+            'listname' => 'required|min:2|max:200',
             'description' => 'min:0|max:2000',
             'user_id' => 'required|exists:users,id'
         );
         $this->validate($request, $rules);
         $list = ReadingList::find($request->id);
-        $list->name = $request->name;
+        $list->listname = $request->listname;
         $list->description = $request->description; //possibly wrong
         $list->user_id = $request->user_id;
+        $list->visible = $request->visible;
         $list->save();
         return redirect('/'); //change the redirect later
     }
@@ -103,8 +107,16 @@ class ReadingListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function showdelete($id)
+    {
+        $list = ReadingList::findOrFail($id);
+        return view('delete_reading_list', compact('list'));
+    }
     public function destroy($id) ///also needs deletion of pivot table data
     {
+        DB::table('book_reading_list')->where('reading_list_id', '=', $id)->delete();
+        DB::table('reading_list_tag')->where('reading_list_id', '=', $id)->delete();
         ReadingList::findOrFail($id)->delete();
+        return redirect('/');
     }
 }

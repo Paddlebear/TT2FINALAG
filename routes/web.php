@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\ReadingListController;
+use App\Http\Controllers\BookController;
 
 
 /*
@@ -18,13 +20,18 @@ use App\Http\Controllers\TestController;
 //Route::get('/', function () {
 //    return view('welcome');
 //});
-Route::redirect('/', 'test');
-Route::resource('test', TestController::class); 
+Route::redirect('/', 'home');
+Route::resource('home', ReadingListController::class);
+Route::resource('books', BookController::class, ['except' => ['index',
+        'create']]);
+Route::get('books', [BookController::class, 'index']);
+Route::get('add_book', [BookController::class, 'create']);
+Route::get('add_reading_list', [ReadingListController::class, 'create']);
+Route::get('delete_reading_list/{id}', [ReadingListController::class, 'showdelete']);
+//Auth::routes();
+//
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Auth::routes();
+//
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

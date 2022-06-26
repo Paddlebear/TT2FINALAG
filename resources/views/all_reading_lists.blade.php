@@ -1,7 +1,8 @@
 <!DOCTYPE html>
+<!-- this is also the homepage. -->
 <html>
     <head>
-        <title>All reading lists</title>
+        <title>Reading Recs</title>
     </head>
     <body>
         @if (count($lists) == 0)
@@ -9,7 +10,6 @@
         @else
         <table style="border: 1px solid black">
             <tr>
-                <td> ID </td>
                 <td> Name </td>
                 <td> By: </td>
                 <td> Description </td>
@@ -17,22 +17,29 @@
             </tr>
             @foreach ($lists as $list)
             <tr>
-                <td> {{ $list->id }} </td>
+                <td> {{ $list->listname }} </td>
                 <td> {{ $list->name }} </td>
-                <td> {{ $list->owner }} </td>
                 <td> {{ $list->description }} </td>
+                <td><input type="button" value="Delete list" onclick="deleteList({{ $list->id }})"></td>
                 @endforeach
         </table>
         @endif
-<!--        <p> <input type="button" value="New Book" onclick="addCountry({})"> </p>
-        <p> <input type="button" value="Search books" onclick="filterBooks({})"> </p>-->
-<!--        <script> ///sample code for later
-            function addCountry() {
-                window.location.href = "/country/create";
+        <p> <input type="button" value="See Books" onclick="seeBooks({})"> </p>
+        <p> <input type="button" value="New List (in development)" onclick="addBook({})"> </p>
+<!--        <p> <input type="button" value="Search books" onclick="filterBooks({})"> </p>-->
+        <script> ///sample code for later
+            function seeBooks() {
+                window.location.href = "/books";
             }
-            function filterBooks() {
-                window.location.href = "filter";
+            function addBook() {
+                window.location.href = "/add_reading_list";
             }
-        </script>-->
+            function deleteList(listID) {
+                window.location.href = "/delete_reading_list/"+listID;
+            }
+//            function filterBooks() {
+//                window.location.href = "filter";
+//            }
+        </script>
     </body>
 </html>

@@ -22,7 +22,7 @@ class TestController extends Controller
                 select('books.id','books.booktitle', 'books.author', 'books.publicationyear', 'genres.genrename')->get();
         $tags = Tag::all();
         $lists = ReadingList::all();
-        return view('test', ['books' => $books, 'tags' => $tags]);
+        return view('all_reading_lists', ['books' => $books, 'tags' => $tags, 'lists' => $lists]);
     }
 
     /**

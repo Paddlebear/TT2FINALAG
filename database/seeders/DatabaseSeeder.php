@@ -352,8 +352,8 @@ class DatabaseSeeder extends Seeder
             'tagname' => 'tag3'
         ]);
         $readinglist = ReadingList::create([
-            'name' => 'testlist1',
-            'description' => 'this is me just testing whether the lists even work...',
+            'listname' => 'Test list',
+            'description' => 'Also known as fanfiction',
             'user_id' => 1,
             'visible' => 1
         ]);

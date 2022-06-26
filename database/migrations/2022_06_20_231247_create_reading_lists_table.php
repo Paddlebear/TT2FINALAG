@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('reading_lists', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-	    $table->string('name', 100)->unique;
+	    $table->string('listname', 100)->unique;
 	    $table->string('description', 2000)->nullable();
             $table->foreignId('user_id')->constrained();
             $table->boolean('visible');
